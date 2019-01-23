@@ -17,8 +17,8 @@ public class PlayerMovement : MonoBehaviour
     public float speed;
     private Rigidbody2D myRigidbody;
     private Animator animator;
-    private Vector2 change;
-    private Vector2 cameraPos;
+    private Vector3 change;
+    private Vector3 cameraPos;
     private bool NeedMove = false;
 
     // Start is called before the first frame update
@@ -35,13 +35,13 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         //change = Input.mousePosition;
-        //Vector2 mousePos = Input.mousePosition;
+        //Vector3 mousePos = Input.mousePosition;
         //cameraPos = Camera.main.ScreenToWorldPoint(change);
         //change.x = Input.GetAxisRaw("Horizontal"); ;
         //change.y = Input.GetAxisRaw("Vertical");
         if ((Input.GetMouseButtonUp(0) == true))
         {
-            Vector2 mousePos = Input.mousePosition;
+            Vector3 mousePos = Input.mousePosition;
             cameraPos = Camera.main.ScreenToWorldPoint(mousePos);
             NeedMove = true;
         }
@@ -71,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
         if (Vector2.Distance(transform.position, cameraPos) > 0.01)
         {
             MoveCharacter();
-            animator.SetFloat("moveX", myRigidbody.transform.);
+            animator.SetFloat("moveX", cameraPos.x);
             animator.SetFloat("moveY", cameraPos.y);
             animator.SetBool("moving", true);
         }
@@ -109,7 +109,7 @@ public class PlayerMovement : MonoBehaviour
         {
 
             yield return new WaitForSeconds(knockTime);
-            myRigidbody.velocity = Vector2.zero;
+            myRigidbody.velocity = Vector3.zero;
             currentState = PlayerState.idle;
         }
     }
